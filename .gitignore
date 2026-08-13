@@ -1,0 +1,13 @@
+.coverage
+.pytest_cache/
+.ruff_cache/
+.venv/
+__pycache__/
+*.egg-info/
+*.py[cod]
+*.sqlite3
+*.ndjson
+build/
+dist/
+htmlcov/
+
