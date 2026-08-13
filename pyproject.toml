@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "resumable-api-batch-extractor"
-version = "0.1.0"
+version = "0.1.1"
 description = "Synthetic resumable API batch extractor with cursor checkpoints, retry and idempotent NDJSON output."
 readme = "README.md"
 requires-python = ">=3.11"
@@ -47,4 +47,3 @@ source = ["resumable_api_batch_extractor"]
 show_missing = true
 skip_covered = true
 fail_under = 88
-
