@@ -2,6 +2,7 @@
 
 [![CI](https://github.com/guilherme-lacerda-tech/resumable-api-batch-extractor/actions/workflows/ci.yml/badge.svg)](https://github.com/guilherme-lacerda-tech/resumable-api-batch-extractor/actions/workflows/ci.yml)
 [![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![Release](https://img.shields.io/github/v/release/guilherme-lacerda-tech/resumable-api-batch-extractor)](https://github.com/guilherme-lacerda-tech/resumable-api-batch-extractor/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 A production-style batch extraction lab for cursor-paginated APIs. It demonstrates resumable checkpoints, retryable HTTP reads, idempotent NDJSON writes and deterministic synthetic API simulation without using any real service, customer system or private dataset.
@@ -18,6 +19,8 @@ Many support and operations tools need to extract large API datasets without los
 - Unit tests for resume, retry, contract validation and CLI behavior.
 
 ## Architecture
+
+See [docs/architecture.md](docs/architecture.md) for the technical overview.
 
 ```mermaid
 flowchart LR
@@ -54,6 +57,8 @@ Expected shape:
 }
 ```
 
+More usage examples are in [docs/usage-examples.md](docs/usage-examples.md).
+
 ## Validation
 
 ```bash
@@ -66,6 +71,8 @@ The coverage gate is set to 88%.
 ## Failure Model
 
 The extractor updates output and checkpoint separately. If a process stops after a page is written but before a checkpoint advances, the next run can read the same page again. The NDJSON sink tracks already-written record IDs and skips duplicates, keeping resumed runs idempotent.
+
+See [docs/adr/0001-checkpoint-and-idempotent-output.md](docs/adr/0001-checkpoint-and-idempotent-output.md) for the design decision behind this model.
 
 ## Repository Structure
 
@@ -88,3 +95,6 @@ tests/
 
 This project is a public rewrite from scratch using only synthetic data. It does not contain real endpoints, credentials, tokens, customer names, private logs or internal schemas.
 
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md).
