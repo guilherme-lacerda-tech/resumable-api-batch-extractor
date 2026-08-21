@@ -68,6 +68,15 @@ python -m pytest --cov --cov-report=term-missing -q
 
 The coverage gate is set to 88%.
 
+## Benchmark Backlog
+
+A clean-room benchmark contract and execution backlog were prepared for a future benchmark pass:
+
+- [specification/benchmark-contract.md](specification/benchmark-contract.md)
+- [benchmarks/BENCHMARK_BACKLOG.md](benchmarks/BENCHMARK_BACKLOG.md)
+
+The public metric boundary is explicit: professional extractor metrics may be summarized separately, but this repository must continue to use only synthetic APIs and generated records.
+
 ## Failure Model
 
 The extractor updates output and checkpoint separately. If a process stops after a page is written but before a checkpoint advances, the next run can read the same page again. The NDJSON sink tracks already-written record IDs and skips duplicates, keeping resumed runs idempotent.
