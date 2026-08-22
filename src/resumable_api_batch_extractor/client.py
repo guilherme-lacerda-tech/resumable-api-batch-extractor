@@ -45,7 +45,11 @@ class HttpApiClient:
                         f"transient status {response.status_code} while fetching cursor {cursor!r}"
                     )
                 response.raise_for_status()
-                return self._parse_page(response.json(), config)
+                try:
+                    payload = response.json()
+                except ValueError as exc:
+                    raise ApiContractError("API response body must be valid JSON") from exc
+                return self._parse_page(payload, config)
             except (httpx.HTTPError, RecoverableApiError) as exc:
                 last_error = exc
                 if attempt == config.retry_attempts:
@@ -81,4 +85,3 @@ class HttpApiClient:
 
     def __exit__(self, *_args: object) -> None:
         self.close()
-

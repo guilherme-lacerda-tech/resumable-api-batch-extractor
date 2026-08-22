@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/benchmarks/">
+    <Project Path="benchmarks/ResumableExtractor.Benchmarks/ResumableExtractor.Benchmarks.csproj" />
+  </Folder>
   <Folder Name="/src/">
     <Project Path="src/ResumableExtractor.Worker/ResumableExtractor.Worker.csproj" />
   </Folder>

@@ -1,0 +1,94 @@
+{
+  "benchmark": "resumable-api-batch-extractor-dotnet",
+  "notes": [
+    "Synthetic records are generated in memory before timing starts.",
+    "Memory is a process working-set snapshot and includes the in-memory synthetic fixture.",
+    "Checkpoint overhead is approximated by comparing SQLite checkpoint runs with no-op checkpoint runs."
+  ],
+  "results": [
+    {
+      "recordCount": 10000,
+      "pageSize": 5000,
+      "bestWithCheckpoint": {
+        "checkpointEnabled": true,
+        "completed": true,
+        "recordCount": 10000,
+        "pageSize": 5000,
+        "pages": 2,
+        "recordsPerSecond": 29631.789457839004,
+        "pagesPerSecond": 5.9263578915678,
+        "durationSeconds": 0.3374754,
+        "cpuSeconds": 0.25,
+        "rssBeforeMb": 38.6875,
+        "rssAfterMb": 56.890625,
+        "rssDeltaMb": 18.203125,
+        "peakWorkingSetMb": 56.890625,
+        "stats": {
+          "completed": true,
+          "pagesRead": 2,
+          "recordsWritten": 10000,
+          "lastCursor": null,
+          "resumed": false,
+          "retries": 0,
+          "skippedDuplicates": 0
+        }
+      },
+      "checkpointOverheadSeconds": 0.17866059999999997,
+      "checkpointOverheadPercent": 112.49619053136104,
+      "resume": {
+        "interruptAfterPages": 1,
+        "resumeDurationSeconds": 0.1022417,
+        "resumeCpuSeconds": 0.0625,
+        "resumeRssBeforeMb": 67.30859375,
+        "resumeRssAfterMb": 70.6953125,
+        "resumeRssDeltaMb": 3.38671875,
+        "resumePeakWorkingSetMb": 70.6953125,
+        "resumePagesRead": 1,
+        "resumeRecordsWritten": 5000,
+        "resumeSkippedDuplicates": 0
+      }
+    },
+    {
+      "recordCount": 100000,
+      "pageSize": 5000,
+      "bestWithCheckpoint": {
+        "checkpointEnabled": true,
+        "completed": true,
+        "recordCount": 100000,
+        "pageSize": 5000,
+        "pages": 20,
+        "recordsPerSecond": 10410.609643843258,
+        "pagesPerSecond": 2.0821219287686517,
+        "durationSeconds": 9.6055854,
+        "cpuSeconds": 2.046875,
+        "rssBeforeMb": 87.55859375,
+        "rssAfterMb": 137.2578125,
+        "rssDeltaMb": 49.69921875,
+        "peakWorkingSetMb": 137.3359375,
+        "stats": {
+          "completed": true,
+          "pagesRead": 20,
+          "recordsWritten": 100000,
+          "lastCursor": null,
+          "resumed": false,
+          "retries": 0,
+          "skippedDuplicates": 0
+        }
+      },
+      "checkpointOverheadSeconds": 3.0713594000000004,
+      "checkpointOverheadPercent": 47.004180755302926,
+      "resume": {
+        "interruptAfterPages": 10,
+        "resumeDurationSeconds": 4.5862673,
+        "resumeCpuSeconds": 0.515625,
+        "resumeRssBeforeMb": 145.76953125,
+        "resumeRssAfterMb": 144.48828125,
+        "resumeRssDeltaMb": -1.28125,
+        "resumePeakWorkingSetMb": 147.875,
+        "resumePagesRead": 10,
+        "resumeRecordsWritten": 50000,
+        "resumeSkippedDuplicates": 0
+      }
+    }
+  ]
+}

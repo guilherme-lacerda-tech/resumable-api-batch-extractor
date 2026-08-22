@@ -1,0 +1,55 @@
+{
+  "benchmark": "resumable-api-batch-extractor-python",
+  "notes": [
+    "Synthetic records are generated in memory before timing starts.",
+    "Memory is a process RSS snapshot and includes the in-memory synthetic fixture.",
+    "Checkpoint overhead is approximated by comparing SQLite checkpoint runs with no-op checkpoint runs."
+  ],
+  "results": [
+    {
+      "best_with_checkpoint": {
+        "checkpoint_enabled": true,
+        "completed": true,
+        "cpu_seconds": 0.140625,
+        "cpu_to_wall_ratio": 0.498398921154934,
+        "duration_seconds": 0.2821534999998221,
+        "page_size": 5000,
+        "pages": 2,
+        "pages_per_second": 7.088340211981284,
+        "peak_working_set_mb": 48.40625,
+        "record_count": 10000,
+        "records_per_second": 35441.701059906416,
+        "rss_after_mb": 48.40625,
+        "rss_before_mb": 40.92578125,
+        "rss_delta_mb": 7.48046875,
+        "stats": {
+          "completed": true,
+          "last_cursor": null,
+          "pages_read": 2,
+          "records_written": 10000,
+          "resumed": false,
+          "retries": 0,
+          "skipped_duplicates": 0
+        }
+      },
+      "checkpoint_overhead_percent_median": 20.83692720412264,
+      "checkpoint_overhead_seconds_median": 0.04865410000002157,
+      "median_duration_seconds": 0.2821534999998221,
+      "page_size": 5000,
+      "record_count": 10000,
+      "repeat": 1,
+      "resume": {
+        "interrupt_after_pages": 1,
+        "resume_cpu_seconds": 0.046875,
+        "resume_duration_seconds": 0.16688190000013492,
+        "resume_pages_read": 1,
+        "resume_peak_working_set_mb": 49.38671875,
+        "resume_records_written": 5000,
+        "resume_rss_after_mb": 48.6484375,
+        "resume_rss_before_mb": 46.99609375,
+        "resume_rss_delta_mb": 1.65234375,
+        "resume_skipped_duplicates": 0
+      }
+    }
+  ]
+}

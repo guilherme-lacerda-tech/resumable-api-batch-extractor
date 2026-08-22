@@ -95,3 +95,13 @@ def test_sink_rejects_records_without_id(tmp_path) -> None:
     with pytest.raises(ValueError):
         sink.write_many([{"name": "missing identifier"}])
 
+
+def test_checkpoint_store_releases_sqlite_file_handles(tmp_path) -> None:
+    path = tmp_path / "state.sqlite3"
+    store = SQLiteCheckpointStore(path)
+    store.save("job", "10", pages=1, records=10)
+    store.mark_completed("job", pages=2, records=20)
+
+    assert store.load("job").completed is True
+    path.unlink()
+    assert not path.exists()

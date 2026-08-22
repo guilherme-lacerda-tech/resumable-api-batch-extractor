@@ -10,6 +10,8 @@ __pycache__/
 build/
 dist/
 htmlcov/
-dotnet/**/bin/
-dotnet/**/obj/
-
+bin/
+obj/
+TestResults/
+.vs/
+*.user

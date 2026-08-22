@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import sqlite3
+from contextlib import closing
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -17,7 +18,7 @@ class SQLiteCheckpointStore:
         return sqlite3.connect(self.path)
 
     def _initialize(self) -> None:
-        with self._connect() as connection:
+        with closing(self._connect()) as connection:
             connection.execute(
                 """
                 CREATE TABLE IF NOT EXISTS checkpoints (
@@ -31,9 +32,10 @@ class SQLiteCheckpointStore:
                 )
                 """
             )
+            connection.commit()
 
     def load(self, job_name: str) -> CheckpointState:
-        with self._connect() as connection:
+        with closing(self._connect()) as connection:
             row = connection.execute(
                 "SELECT cursor, completed, pages, records FROM checkpoints WHERE job_name = ?",
                 (job_name,),
@@ -49,7 +51,7 @@ class SQLiteCheckpointStore:
 
     def save(self, job_name: str, cursor: str | None, pages: int, records: int) -> None:
         now = datetime.now(UTC).isoformat()
-        with self._connect() as connection:
+        with closing(self._connect()) as connection:
             connection.execute(
                 """
                 INSERT INTO checkpoints (job_name, cursor, completed, pages, records, updated_at)
@@ -64,10 +66,11 @@ class SQLiteCheckpointStore:
                 """,
                 (job_name, cursor, pages, records, now),
             )
+            connection.commit()
 
     def mark_completed(self, job_name: str, pages: int, records: int) -> None:
         now = datetime.now(UTC).isoformat()
-        with self._connect() as connection:
+        with closing(self._connect()) as connection:
             connection.execute(
                 """
                 INSERT INTO checkpoints (
@@ -84,8 +87,9 @@ class SQLiteCheckpointStore:
                 """,
                 (job_name, pages, records, now, now),
             )
+            connection.commit()
 
     def reset(self, job_name: str) -> None:
-        with self._connect() as connection:
+        with closing(self._connect()) as connection:
             connection.execute("DELETE FROM checkpoints WHERE job_name = ?", (job_name,))
-
+            connection.commit()

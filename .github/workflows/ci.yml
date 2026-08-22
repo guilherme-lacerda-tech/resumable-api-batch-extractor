@@ -41,7 +41,7 @@ jobs:
           dotnet-version: "10.0.x"
 
       - name: .NET build
-        run: dotnet build dotnet/ResumableExtractorCleanRoom.slnx -c Release
+        run: dotnet build dotnet/ResumableExtractorCleanRoom.slnx --configuration Release
 
       - name: .NET tests
-        run: dotnet test dotnet/ResumableExtractorCleanRoom.slnx -c Release --no-build
+        run: dotnet test dotnet/ResumableExtractorCleanRoom.slnx --configuration Release --no-build
