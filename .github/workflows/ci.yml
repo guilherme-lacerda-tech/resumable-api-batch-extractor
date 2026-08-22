@@ -34,3 +34,14 @@ jobs:
 
       - name: Tests
         run: python -m pytest --cov --cov-report=term-missing -q
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: .NET build
+        run: dotnet build dotnet/ResumableExtractorCleanRoom.slnx -c Release
+
+      - name: .NET tests
+        run: dotnet test dotnet/ResumableExtractorCleanRoom.slnx -c Release --no-build

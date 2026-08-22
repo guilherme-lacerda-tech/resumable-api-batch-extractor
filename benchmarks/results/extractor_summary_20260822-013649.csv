@@ -1,0 +1,5 @@
+records,stack,runs,mean_records_per_second,mean_elapsed_seconds,correctness
+10000,dotnet,3,8596.75,1.181214,True
+10000,python,3,3878.45,2.593887,True
+100000,dotnet,3,32193.14,3.234546,True
+100000,python,3,10926.69,9.290516,True

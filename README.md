@@ -9,7 +9,7 @@ A production-style batch extraction lab for cursor-paginated APIs. It demonstrat
 
 ## Why This Project Exists
 
-Many support and operations tools need to extract large API datasets without losing progress when rate limits, network errors or interrupted jobs happen. This repository shows that workflow as a small, inspectable Python implementation:
+Many support and operations tools need to extract large API datasets without losing progress when rate limits, network errors or interrupted jobs happen. This repository shows that workflow as a small, inspectable Python implementation plus a clean-room .NET Worker Service POC:
 
 - Cursor-based pagination.
 - SQLite checkpoint state.
@@ -17,6 +17,7 @@ Many support and operations tools need to extract large API datasets without los
 - Idempotent output that skips records already written.
 - Demo API powered by `httpx.MockTransport`.
 - Unit tests for resume, retry, contract validation and CLI behavior.
+- .NET Worker Service POC with xUnit tests for checkpoint/resume and duplicate-safe output.
 
 ## Architecture
 
@@ -64,16 +65,27 @@ More usage examples are in [docs/usage-examples.md](docs/usage-examples.md).
 ```bash
 python -m ruff check .
 python -m pytest --cov --cov-report=term-missing -q
+dotnet build dotnet/ResumableExtractorCleanRoom.slnx -c Release
+dotnet test dotnet/ResumableExtractorCleanRoom.slnx -c Release --no-build
 ```
 
 The coverage gate is set to 88%.
 
-## Benchmark Backlog
+## Benchmarks
 
-A clean-room benchmark contract and execution backlog were prepared for a future benchmark pass:
+A clean-room benchmark contract, backlog and local smoke runner are available:
 
 - [specification/benchmark-contract.md](specification/benchmark-contract.md)
 - [benchmarks/BENCHMARK_BACKLOG.md](benchmarks/BENCHMARK_BACKLOG.md)
+- [benchmarks/extractor-results.md](benchmarks/extractor-results.md)
+
+Run:
+
+```bash
+python benchmarks/run_extractor_benchmarks.py --sizes 10000,100000 --runs 3 --warmup 1 --page-size 500
+```
+
+The current benchmark is a smoke benchmark, not a final language verdict. Python exercises the `httpx.MockTransport` path; the .NET Worker uses an in-memory synthetic page client with SQLite checkpointing. A canonical comparison should align the transport layer before making throughput claims.
 
 The public metric boundary is explicit: professional extractor metrics may be summarized separately, but this repository must continue to use only synthetic APIs and generated records.
 
@@ -98,6 +110,9 @@ tests/
   test_client.py
   test_extractor.py
   test_cli.py
+dotnet/
+  src/ResumableExtractor.Worker/
+  tests/ResumableExtractor.Tests/
 ```
 
 ## Security
